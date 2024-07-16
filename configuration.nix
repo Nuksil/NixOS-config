@@ -3,7 +3,7 @@
 {
   imports = [ ];
 
-  boot.loader.grub.device = "/dev/sdX";  # Replace /dev/sdX with your actual disk
+  boot.loader.grub.device = "/dev/sdX";  # Replace /dev/sd1 with your actual disk
 
   fileSystems."/" =
     { device = "/dev/sdX1";  # Replace /dev/sdX1 with your actual partition
