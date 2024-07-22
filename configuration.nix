@@ -37,7 +37,7 @@
 
   users.users.your_username = { # Replace 'your_username' with your actual username
     isNormalUser = true;
-    initialPassword = "Glider0071"; # Set a password
+    initialPassword = "Glider007"; # Set a password
     extraGroups = [ "wheel" ]; # Add user to the wheel group for sudo access
   };
 
