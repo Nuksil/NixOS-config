@@ -13,7 +13,7 @@
   networking.hostName = "NukNix"; # Set your hostname
   networking.useDHCP = true; # or configure a static IP
 
-  time.timeZone = "Europe/London"; # Set your timezone
+  time.timeZone = "Europe/london"; # Set your timezone
 
   # Enable NVIDIA drivers
   services.xserver.videoDrivers = [ "nvidia" ];
@@ -22,7 +22,7 @@
 
   # Enable X server
   services.xserver.enable = true;
-  services.xserver.layout = "uk"; # Set your keyboard layout
+  services.xserver.layout = "us"; # Set your keyboard layout
   services.xserver.displayManager.lightdm.enable = true; # Use LightDM as the display manager
   services.xserver.desktopManager.xterm.enable = false; # Disable Xterm
   services.xserver.windowManager.i3.enable = true; # Enable i3 window manager
