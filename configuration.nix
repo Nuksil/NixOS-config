@@ -8,16 +8,16 @@
 
   boot.loader.grub.enable = true;
   boot.loader.grub.version = 2;
-  boot.loader.grub.device = "/dev/sda"; # or the correct device for your system
+  boot.loader.grub.device = "/dev/sda2"; # or the correct device for your system
 
-  networking.hostName = "nixos"; # Set your hostname
+  networking.hostName = "NukNix"; # Set your hostname
   networking.useDHCP = true; # or configure a static IP
 
-  time.timeZone = "UTC"; # Set your timezone
+  time.timeZone = "Europe/London"; # Set your timezone
 
   # Enable X server
   services.xserver.enable = true;
-  services.xserver.layout = "us"; # Set your keyboard layout
+  services.xserver.layout = "uk"; # Set your keyboard layout
   services.xserver.displayManager.lightdm.enable = true; # Use LightDM as the display manager
   services.xserver.desktopManager.xterm.enable = false; # Disable Xterm
   services.xserver.windowManager.i3.enable = true; # Enable i3 window manager
@@ -37,7 +37,7 @@
 
   users.users.your_username = { # Replace 'your_username' with your actual username
     isNormalUser = true;
-    initialPassword = "your_password"; # Set a password
+    initialPassword = "Glider0071"; # Set a password
     extraGroups = [ "wheel" ]; # Add user to the wheel group for sudo access
   };
 
