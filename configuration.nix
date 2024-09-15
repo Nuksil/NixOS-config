@@ -2,48 +2,95 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [ 
       ./hardware-configuration.nix
     ];
 
-  boot.loader.grub.enable = true;
-  boot.loader.grub.version = 2;
-  boot.loader.grub.device = "/dev/sda2"; # or the correct device for your system
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "NuksNix"; # Set your hostname
-  networking.useDHCP = true; # or configure a static IP
+  networking.hostName = "nixos";
+  networking.networkmanager.enable = true;
 
-  time.timeZone = "Europe/London"; # Set your timezone
-
-  # Enable X server
-  services.xserver.enable = true;
-  services.xserver.layout = "uk"; # Set your keyboard layout
-  services.xserver.displayManager.lightdm.enable = true; # Use LightDM as the display manager
-  services.xserver.desktopManager.xterm.enable = false; # Disable Xterm
-  services.xserver.windowManager.i3.enable = true; # Enable i3 window manager
-
-  # Enable Waybar
-  services.waybar.enable = true;
-
-  environment.systemPackages = with pkgs; [
-    vim # or your preferred text editor
-    hyper # Install Hyper terminal
-    waybar # Install Waybar
-    i3status # Status bar for i3
-  ];
-
-  # Enable SSH service
-  services.openssh.enable = true;
-
-  users.users.your_username = { # Replace 'your_username' with your actual username
-    isNormalUser = true;
-    initialPassword = "Glider007"; # Set a password
-    extraGroups = [ "wheel" ]; # Add user to the wheel group for sudo access
+  time.timeZone = "Europe/London";
+  i18n.defaultLocale = "en_GB.UTF-8";
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "en_GB.UTF-8";
+    LC_IDENTIFICATION = "en_GB.UTF-8";
+    LC_MEASUREMENT = "en_GB.UTF-8";
+    LC_MONETARY = "en_GB.UTF-8";
+    LC_NAME = "en_GB.UTF-8";
+    LC_NUMERIC = "en_GB.UTF-8";
+    LC_PAPER = "en_GB.UTF-8";
+    LC_TELEPHONE = "en_GB.UTF-8";
+    LC_TIME = "en_GB.UTF-8";
   };
 
-  # Allow members of the wheel group to use sudo
-  security.sudo.enable = true;
-  security.sudo.wheelNeedsPassword = false; # Optional: allow passwordless sudo for wheel group
+  services.xserver.xkb = {
+    layout = "gb";
+    variant = "";
+  };
 
-  system.stateVersion = "22.11"; # Set to the version of NixOS you are installing
+  console.keyMap = "uk";
+
+  users.users.nuks = {
+    isNormalUser = true;
+    description = "Nuksil";
+    extraGroups = [ "networkmanager" "wheel" ];
+    packages = with pkgs; [];
+  };
+
+  nixpkgs.config.allowUnfree = true;
+
+  environment.systemPackages = with pkgs; [
+    vim
+    wget
+    htop
+  ];
+
+  system.stateVersion = "24.05";
+
+  # Hyprland Configuration
+  programs.hyprland = {
+    enable = true;
+    nvidiaPatches = true;
+    xwayland.enable = true;
+  };
+
+  # Session Variables for Wayland and Electron
+  environment.sessionVariables = {
+    WLR_NO_HARDWARE_CURSORS = "1"; # If your cursor becomes invisible
+    NIXOS_OZONE_WL = "1"; # Hint Electron apps to use Wayland
+  };
+
+  # Hardware settings
+  hardware.opengl.enable = true;  # Enable OpenGL
+  hardware.nvidia.modesetting.enable = true;  # Most Wayland compositors need this
+
+  # Waybar with experimental flag
+  environment.systemPackages = with pkgs; [
+    (pkgs.waybar.overrideAttrs (oldAttrs: {
+      mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
+    }))
+  ];
+
+  # XDG Portals for better desktop integration
+  xdg.portal.enable = true;
+  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+
+  # Enable sound with PipeWire and related services
+  sound.enable = true;
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    jack.enable = true;
+  };
+
+  # Rofi keybind for launching applications
+  services.xserver.windowManager.hyprland.extraConfig = ''
+    bindsym $mainMod+Shift+S exec rofi -show drun -show-icons
+  '';
 }
