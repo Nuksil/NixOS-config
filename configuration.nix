@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, ... }: 
 
 {
   imports =
@@ -30,9 +30,9 @@
     layout = "gb";
     variant = "";
   };
-   services.xserver.enable = true;
-   services.xserver.displayManager.sddm.enable = true;
-   services.xserver.displayManager.sddm.wayland.enable = true;
+  services.xserver.enable = true;
+  services.xserver.displayManager.sddm.enable = true;
+  services.xserver.displayManager.sddm.wayland.enable = true;
 
   console.keyMap = "uk";
 
@@ -67,9 +67,14 @@
     NIXOS_OZONE_WL = "1"; # Hint Electron apps to use Wayland
   };
 
-  # Hardware settings
-  hardware.opengl.enable = true;  # Enable OpenGL
-  hardware.nvidia.modesetting.enable = true;  # Most Wayland compositors need
+  # NVIDIA Drivers
+  hardware.opengl.enable = true;
+  hardware.nvidia = {
+    modesetting.enable = true; # Most Wayland compositors need
+    package = config.boot.kernelPackages.nvidiaPackages.stable; # Use stable version of NVIDIA drivers
+  };
+
+  services.xserver.videoDrivers = [ "nvidia" ];
 
   # XDG Portals for better desktop integration
   xdg.portal.enable = true;
@@ -85,6 +90,5 @@
     pulse.enable = true;
     jack.enable = true;
   };
-
 
 }
