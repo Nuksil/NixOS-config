@@ -46,6 +46,8 @@
     vim
     wget
     htop
+    git
+    waybar
   ];
 
   system.stateVersion = "24.05";
@@ -53,7 +55,6 @@
   # Hyprland Configuration
   programs.hyprland = {
     enable = true;
-    nvidiaPatches = true;
     xwayland.enable = true;
   };
 
@@ -65,14 +66,7 @@
 
   # Hardware settings
   hardware.opengl.enable = true;  # Enable OpenGL
-  hardware.nvidia.modesetting.enable = true;  # Most Wayland compositors need this
-
-  # Waybar with experimental flag
-  environment.systemPackages = with pkgs; [
-    (pkgs.waybar.overrideAttrs (oldAttrs: {
-      mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
-    }))
-  ];
+  hardware.nvidia.modesetting.enable = true;  # Most Wayland compositors need
 
   # XDG Portals for better desktop integration
   xdg.portal.enable = true;
@@ -89,8 +83,5 @@
     jack.enable = true;
   };
 
-  # Rofi keybind for launching applications
-  services.xserver.windowManager.hyprland.extraConfig = ''
-    bindsym $mainMod+Shift+S exec rofi -show drun -show-icons
-  '';
+
 }
