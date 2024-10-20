@@ -31,8 +31,8 @@
     variant = "";
   };
   services.xserver.enable = true;
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.displayManager.sddm.wayland.enable = true;
+  services.displayManager.sddm.enable = true;
+  services.displayManager.sddm.wayland.enable = true;
 
   console.keyMap = "uk";
 
@@ -51,6 +51,11 @@
     htop
     git
     waybar
+    kitty
+    google-chrome
+    rofi-wayland
+    neovim
+    vscode
   ];
 
   system.stateVersion = "24.05";
@@ -80,15 +85,16 @@
   xdg.portal.enable = true;
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
-  # Enable sound with PipeWire and related services
   sound.enable = true;
   security.rtkit.enable = true;
   services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    jack.enable = true;
-  };
+  enable = true;
+  alsa.enable = true;
+  alsa.support32Bit = true;
+  pulse.enable = true;
+  jack.enable  = true;
+ };
+  
+ 
 
 }
