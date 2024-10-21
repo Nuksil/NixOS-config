@@ -16,7 +16,9 @@
   # Enable networking
   networking.networkmanager.enable = true;
   
-  
+  # Bluetooth enable
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
 
   # Set your time zone.
   time.timeZone = "Europe/London";
@@ -92,7 +94,8 @@
     google-chrome
     vscode
     neovim
-    networkmanagerapplet 
+    networkmanagerapplet
+    dolphin 
   ];
 
 
@@ -100,7 +103,6 @@
   services.xserver.videoDrivers = ["nvidia"];
   hardware.nvidia.modesetting.enable = true;
   
-
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
@@ -119,6 +121,7 @@
     pulse.enable = true;
     jack.enable = true;
   };
+
 
   system.stateVersion = "24.05"; 
 
