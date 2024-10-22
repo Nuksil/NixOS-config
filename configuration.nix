@@ -82,6 +82,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    vim
     wget
     git  
     vscode
@@ -95,9 +96,12 @@
     vscode
     neovim
     networkmanagerapplet
-    dolphin 
+    unzip
+    xdg-utils
+     
   ];
-
+  # Enable thunar
+  programs.thunar.enable = true;
 
   # List services that you want to enable:
   services.xserver.videoDrivers = ["nvidia"];
